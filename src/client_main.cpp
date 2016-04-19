@@ -1,9 +1,9 @@
 //============================================================================
-// Name        : TallerTP3.cpp
+// Name        : client_main.cpp
 // Author      : Freddy
 // Version     :
 // Copyright   : Do not copy
-// Description : Hello World in C++, Ansi-style
+// Description : MapReduce mapper
 //============================================================================
 
 #include <iostream>
@@ -14,31 +14,37 @@
 using namespace std;
 
 #define EXIT_CODE 0
-#define CODE_SEPARADOR "\n";
+#define CODE_SEPARADOR_CAMPOS ' '
+#define CODE_SEPARADOR_LINEAS "\n";
 #define CODE_SERVER_EOF "End\n"
 
-int main(int argc, char *argv[]) try {
+int main_cliente(int argc, char *argv[]) try {
 	//error si me llaman sin 2 argumentos
 	if (argc != 3) {
 		std::cout << "ERROR: argumentos\n";
 		return EXIT_CODE;
 	}
 
+	//consigo referencia al server o exception
 	std::string ip = argv[1];
 	std::string puerto = argv[2];
 	ServerProxy server = ServerProxy(ip, puerto);
 
 	std::string linea;
-	std::string separador = CODE_SEPARADOR;
+	char otroValor = CODE_SEPARADOR_CAMPOS;
+	std::string nuevaEntrada = CODE_SEPARADOR_LINEAS;
 
-
-	//leo cada linea y la mando con su separador
-	//NombreDeLaCiudadSinEspacios Temperatura DíaDeMarzo\n
 	while (std::getline(std::cin, linea)) {
-		//hay que cambiar esta linea a algo del estilo
-		//DiaDeMarzo Temperatura NombreDeLaCiudad
-		server.enviar(linea);
-		server.enviar(separador);
+		if (linea.length() == 0) continue;
+		int primerEspacio = linea.find(otroValor);
+		int segundoEspacio = linea.find(otroValor, primerEspacio+1);
+
+		std::string nombreCiudad = linea.substr(0,primerEspacio);
+		std::string temperatura = linea.substr(primerEspacio+1, segundoEspacio-primerEspacio-1);
+		std::string diaDeMarzo = linea.substr(segundoEspacio+1);
+
+		std::string mensaje = diaDeMarzo + otroValor + temperatura + otroValor + nombreCiudad + nuevaEntrada;
+		server.enviar(mensaje);
 	}
 
 	server.enviar(CODE_SERVER_EOF);
