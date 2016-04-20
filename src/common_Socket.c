@@ -1,6 +1,6 @@
 #ifndef SOCKET_C
 #define SOCKET_C
-#include "common_socket.h"
+#include "common_Socket.h"
 
 #define SOCKET_NO_ERROR 0
 #define SOCKET_ERROR_CREANDO 1

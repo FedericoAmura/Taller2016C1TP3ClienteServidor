@@ -5,16 +5,16 @@
  *      Author: freddy
  */
 
-#ifndef SERVERPROXY_H_
-#define SERVERPROXY_H_
+#ifndef CLIENT_SERVERPROXY_H_
+#define CLIENT_SERVERPROXY_H_
 
 #include <string>
 
-#include "common_socket.h"
+#include "common_Socket.h"
 
 class ServerProxy {
 private:
-	socket_t socket;
+	socket_t serverSocket;
 
 public:
 	ServerProxy(const std::string ip, const std::string puerto);
@@ -24,4 +24,4 @@ public:
 	virtual ~ServerProxy();
 };
 
-#endif /* SERVERPROXY_H_ */
+#endif /* CLIENT_SERVERPROXY_H_ */

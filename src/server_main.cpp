@@ -8,8 +8,12 @@
 
 #include <iostream>
 #include <syslog.h>
+#include <vector>
 
-//#include "ClientHandler.h"
+#include "server_MapperListener.h"
+#include "server_MapperProxy.h"
+
+#define MAX_MAPPERS 256
 
 using namespace std;
 
@@ -30,10 +34,10 @@ int main(int argc, char *argv[]) try {
 	std::cout << "Inicializo las estructuras" << std::endl;
 
 	//DataContainer dataCollector (map<dias,maps<temperatura,ciudad> >)
-	//std::vector<ClientProxy> mappers;
-	//MapperReceiver(port, &mappers, &dataCollector);
+	std::vector<MapperProxy> mappers;
+	MapperListener mapperListener(puerto, MAX_MAPPERS);
 
-	//maperReceiver->start();
+	mapperListener.start();
 
 	std::cout << "Ingrese una 'q' para terminar la recepcion de datos desde los mappers." << std::endl;
 	while (quit != 'q') {

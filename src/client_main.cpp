@@ -9,7 +9,7 @@
 #include <iostream>
 #include <syslog.h>
 
-#include "ServerProxy.h"
+#include "client_ServerProxy.h"
 
 using namespace std;
 
