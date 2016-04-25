@@ -30,10 +30,6 @@ public:
 	virtual void run() = 0;
 
 	virtual ~Thread();
-
-private:
-	Thread(const Thread&);
-	Thread& operator=(const Thread&);
 };
 
 #endif /* SERVER_THREAD_H_ */
