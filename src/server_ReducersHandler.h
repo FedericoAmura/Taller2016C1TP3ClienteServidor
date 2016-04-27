@@ -21,7 +21,8 @@ private:
 	std::vector<std::string> resultados;
 
 public:
-	ReducersHandler(int dias, const DataCollector &dataCollector, std::vector<std::string> &resultados);
+	ReducersHandler(int dias, const DataCollector &dataCollector,
+			std::vector<std::string> &resultados);
 
 	void run();
 

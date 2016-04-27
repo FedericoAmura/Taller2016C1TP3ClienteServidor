@@ -1,3 +1,7 @@
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #ifndef SOCKET_C
 #define SOCKET_C
 #include "common_Socket.h"
@@ -17,16 +21,16 @@
  *                    PRIMITIVAS DEL SOCKET
  * *****************************************************************/
 
-int socket_init_client(socket_t* skt, const char* protocol, const char* hostname){
+int socket_init_client(socket_t* skt,const char* protocol,const char* hostname){
 	int aux;
 	struct addrinfo *result, *ptr;
 	bool are_we_connected = false;
 
 	//seteo filtros de configuracion
 	memset(&(skt->hints), 0, sizeof(struct addrinfo));
-	(skt->hints).ai_family = AF_INET;       /* IPv4 (or AF_INET6 for IPv6)     */
-	(skt->hints).ai_socktype = SOCK_STREAM; /* TCP  (or SOCK_DGRAM for UDP)    */
-	(skt->hints).ai_flags = 0;              /* None (or AI_PASSIVE for server) */
+	(skt->hints).ai_family = AF_INET;       /* IPv4 (or AF_INET6 for IPv6)    */
+	(skt->hints).ai_socktype = SOCK_STREAM; /* TCP  (or SOCK_DGRAM for UDP)   */
+	(skt->hints).ai_flags = 0;              /* None (or AI_PASSIVE for server)*/
 
 	//busco resolver el destino
 	aux = getaddrinfo(hostname, protocol, &(skt->hints), &result);
@@ -48,7 +52,7 @@ int socket_init_client(socket_t* skt, const char* protocol, const char* hostname
 				printf("Error: %s\n", strerror(errno));
 				close(skt->socketfd);
 			}
-			are_we_connected = (aux != -1); // dejamos de iterar cdo nos conectamos
+			are_we_connected = (aux != -1); //paramos cdo nos conectamos
 		}
 	}
 	freeaddrinfo(result);
@@ -66,9 +70,9 @@ int socket_init_server(socket_t* skt, const char* protocol){
 
 	//seteo filtros de configuracion
 	memset(&(skt->hints), 0, sizeof(struct addrinfo));
-	(skt->hints).ai_family = AF_INET;       /* IPv4 (or AF_INET6 for IPv6)     */
-	(skt->hints).ai_socktype = SOCK_STREAM; /* TCP  (or SOCK_DGRAM for UDP)    */
-	(skt->hints).ai_flags = AI_PASSIVE;     /* AI_PASSIVE for server           */
+	(skt->hints).ai_family = AF_INET;       /* IPv4 (or AF_INET6 for IPv6)    */
+	(skt->hints).ai_socktype = SOCK_STREAM; /* TCP  (or SOCK_DGRAM for UDP)   */
+	(skt->hints).ai_flags = AI_PASSIVE;     /* AI_PASSIVE for server          */
 
 	//proceso mi propia address como server
 	aux = getaddrinfo(NULL, protocol, &(skt->hints), &ptr);
@@ -135,7 +139,7 @@ int socket_listen(socket_t* skt, int cantidadClientes){
 
 int socket_send(socket_t* skt, const char* buffer, const unsigned int size){
 	int aux = 0;
-	int bytes_sent = 0;
+	unsigned int bytes_sent = 0;
 	bool is_there_a_socket_error = false;
 	bool is_the_remote_socket_closed = false;
 
@@ -164,7 +168,7 @@ int socket_send(socket_t* skt, const char* buffer, const unsigned int size){
 
 int socket_receive(socket_t* skt, char* buffer, const unsigned int size){
 	int aux = 0;
-	int bytes_received = 0;
+	unsigned int bytes_received = 0;
 	bool is_there_a_socket_error = false;
 	bool is_the_remote_socket_closed = false;
 
@@ -195,3 +199,7 @@ int socket_shutdown(socket_t* skt) {
 	return SOCKET_NO_ERROR;
 }
 #endif // SOCKET_C
+
+#ifdef __cplusplus
+}
+#endif

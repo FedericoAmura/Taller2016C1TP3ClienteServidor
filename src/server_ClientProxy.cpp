@@ -5,6 +5,8 @@
  *      Author: freddy
  */
 
+#include <string>
+
 #include "server_ClientProxy.h"
 
 ClientProxy::ClientProxy(DataCollector &dataCollector, socket_t cliente)
@@ -15,7 +17,8 @@ std::string ClientProxy::recibirLinea() {
 	return std::string("prueba");
 }
 
-void ClientProxy::agregarData(std::string dia, std::string temperatura, std::string ciudad) {
+void ClientProxy::agregarData(std::string dia, std::string temperatura,
+		std::string ciudad) {
 	dataCollector.addTemperatura(dia, temperatura, ciudad);
 }
 
@@ -28,7 +31,7 @@ void ClientProxy::run() {
 			std::string dia;
 			std::string temperatura;
 			std::string ciudad;
-			//parseo linea a esos 3 strings
+			//parseo linea a esos 3 strings TODO
 			agregarData(dia, temperatura, ciudad);
 		} else {
 			seguirLeyendo = false;

@@ -10,7 +10,7 @@
 
 #define MAP_TERMINADO 0
 
-#include <vector>
+#include <string>
 #include <list>
 
 #include "server_Thread.h"
@@ -26,7 +26,8 @@ private:
 	MapReceiver mapReceiver;
 
 public:
-	MappersHandler(DataCollector &dataCollector, const std::string puerto, int maxMappersQueue);
+	MappersHandler(DataCollector &dataCollector, const std::string puerto,
+			int maxMappersQueue);
 
 	//Arranco el receptor de mappers
 	void run();

@@ -11,14 +11,13 @@
 #include <iostream>
 #include <syslog.h>
 #include <vector>
+#include <string>
 
 #include "server_DataCollector.h"
 #include "server_MappersHandler.h"
 #include "server_ReducersHandler.h"
 
 #define MAX_MAPPERS_QUEUE 256
-
-using namespace std;
 
 #define EXIT_CODE 0
 
@@ -43,7 +42,7 @@ int main(int argc, char *argv[]) try {
 	mappersHandler.start();	//lanzo el receptor de mappers
 
 	//Espero hasta recibir una 'q' para seguir
-	std::cout << "Ingrese una 'q' para terminar la recepcion de datos desde los mappers." << std::endl;
+	std::cout << "Ingrese una 'q' para terminar los mappers." << std::endl;
 	while (quit != 'q') {
 		std::cin >> quit;
 		sleep(0.1);
@@ -66,9 +65,7 @@ int main(int argc, char *argv[]) try {
 } catch (const std::exception &e) {
 	syslog(LOG_CRIT, "[Crit] Error!: %s", e.what());
 	return 1;
-
 } catch(...) {
 	syslog(LOG_CRIT, "[Crit] Unknown error!");
 	return 1;
-
 }

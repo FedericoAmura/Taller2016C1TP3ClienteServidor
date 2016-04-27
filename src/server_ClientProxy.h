@@ -8,9 +8,14 @@
 #ifndef SERVER_CLIENTPROXY_H_
 #define SERVER_CLIENTPROXY_H_
 
+#include <string>
+
+extern "C"{
+#include "common_Socket.h"
+}
+
 #include "server_Thread.h"
 #include "server_DataCollector.h"
-#include "common_Socket.h"
 
 class ClientProxy : public Thread {
 private:

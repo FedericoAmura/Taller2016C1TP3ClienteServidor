@@ -5,10 +5,14 @@
  *      Author: freddy
  */
 
+#include <string>
+#include <list>
+
 #include "server_MapReceiver.h"
 #include "server_DataCollector.h"
 
-MapReceiver::MapReceiver(DataCollector &dataCollector, const std::string puerto, const int maxMappersQueue, std::list<ClientProxy> &mappers)
+MapReceiver::MapReceiver(DataCollector &dataCollector, const std::string puerto,
+		const int maxMappersQueue, std::list<ClientProxy> &mappers)
 	: aceptarConexiones(false), dataCollector(dataCollector), mappers(mappers) {
 	if (0 != socket_init_server(&mapperListener, puerto.c_str())) {
 		throw std::exception();

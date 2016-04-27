@@ -5,6 +5,9 @@
  *      Author: freddy
  */
 
+#include <string>
+#include <list>
+
 #include "server_MappersHandler.h"
 
 #include "server_ClientProxy.h"

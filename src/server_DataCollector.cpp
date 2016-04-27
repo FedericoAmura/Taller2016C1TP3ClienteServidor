@@ -5,18 +5,22 @@
  *      Author: freddy
  */
 
+#include <map>
+#include <string>
+
 #include "server_DataCollector.h"
 
 DataCollector::DataCollector() {
 }
 
-void DataCollector::addTemperatura(std::string dia, std::string temperatura, std::string lugar) {
-
+void DataCollector::addTemperatura(std::string dia, std::string temperatura,
+		std::string lugar) {
+	temperaturas[dia][temperatura] = lugar;
 }
 
-std::map<std::string, std::string> DataCollector::getTemperaturasDia(std::string dia) {
-	std::map<std::string, std::string> retorno;
-	return retorno;
+std::map<std::string, std::string> DataCollector::getTemperaturasDia(
+		std::string dia) {
+	return temperaturas[dia];
 }
 
 DataCollector::~DataCollector() {

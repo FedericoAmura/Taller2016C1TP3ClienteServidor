@@ -10,9 +10,6 @@
 
 #include "client_ServerProxy.h"
 
-#include "common_Socket.h"
-
-
 ServerProxy::ServerProxy(const std::string ip, const std::string puerto) {
 	int aux = 0;
 	aux = socket_init_client(&serverSocket, puerto.c_str(), ip.c_str());

@@ -43,7 +43,8 @@ typedef struct socket socket_t;
 // Crea un socket tipo cliente y lo conecta hacia un servidor
 // Pre: la memoria para el socket ya fue instanciada
 // Post: socket inicializado y conectado
-int socket_init_client(socket_t* skt, const char* protocol, const char* hostname);
+int socket_init_client(socket_t* skt, const char* protocol,
+		const char* hostname);
 
 // Crea un socket tipo servidor vinculado a un puerto local
 // Pre: la memoria para el socket ya fue instanciada

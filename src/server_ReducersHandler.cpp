@@ -10,12 +10,12 @@
 
 #include "server_ReducersHandler.h"
 
-ReducersHandler::ReducersHandler(int dias, const DataCollector &dataCollector, std::vector<std::string> &resultados)
+ReducersHandler::ReducersHandler(int dias, const DataCollector &dataCollector,
+		std::vector<std::string> &resultados)
 	: dias(dias), data(dataCollector), resultados(resultados) {
 }
 
 void ReducersHandler::run() {
-
 }
 
 ReducersHandler::~ReducersHandler() {

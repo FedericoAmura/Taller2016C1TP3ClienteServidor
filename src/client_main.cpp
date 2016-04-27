@@ -8,17 +8,16 @@
 
 #include <iostream>
 #include <syslog.h>
+#include <string>
 
 #include "client_ServerProxy.h"
-
-using namespace std;
 
 #define EXIT_CODE 0
 #define CODE_SEPARADOR_CAMPOS ' '
 #define CODE_SEPARADOR_LINEAS "\n";
 #define CODE_SERVER_EOF "End\n"
 
-int main_cliente(int argc, char *argv[]) try {
+int main_client(int argc, char *argv[]) try {
 	//error si me llaman sin 2 argumentos
 	if (argc != 3) {
 		std::cout << "ERROR: argumentos\n";
@@ -40,10 +39,12 @@ int main_cliente(int argc, char *argv[]) try {
 		int segundoEspacio = linea.find(otroValor, primerEspacio+1);
 
 		std::string nombreCiudad = linea.substr(0,primerEspacio);
-		std::string temperatura = linea.substr(primerEspacio+1, segundoEspacio-primerEspacio-1);
+		std::string temperatura = linea.substr(primerEspacio+1,
+				segundoEspacio-primerEspacio-1);
 		std::string diaDeMarzo = linea.substr(segundoEspacio+1);
 
-		std::string mensaje = diaDeMarzo + otroValor + temperatura + otroValor + nombreCiudad + nuevaEntrada;
+		std::string mensaje = diaDeMarzo + otroValor + temperatura + otroValor
+				+ nombreCiudad + nuevaEntrada;
 		server.enviar(mensaje);
 	}
 
@@ -53,9 +54,7 @@ int main_cliente(int argc, char *argv[]) try {
 } catch (const std::exception &e) {
 	syslog(LOG_CRIT, "[Crit] Error!: %s", e.what());
 	return 1;
-
 } catch(...) {
 	syslog(LOG_CRIT, "[Crit] Unknown error!");
 	return 1;
-
 }

@@ -19,7 +19,8 @@ private:
 public:
 	DataCollector();
 
-	void addTemperatura(std::string dia, std::string temperatura, std::string lugar);
+	void addTemperatura(std::string dia, std::string temperatura,
+			std::string lugar);
 
 	std::map<std::string, std::string> getTemperaturasDia(std::string dia);
 

@@ -13,9 +13,16 @@
 #include <vector>
 #include <list>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+#include "common_Socket.h"
+#ifdef __cplusplus
+}
+#endif
+
 #include "server_Thread.h"
 #include "server_DataCollector.h"
-#include "common_Socket.h"
 #include "server_ClientProxy.h"
 
 class MapReceiver : public Thread {
@@ -26,7 +33,8 @@ private:
 	std::list<ClientProxy> mappers;
 
 public:
-	MapReceiver(DataCollector &dataCollector, const std::string puerto, const int maxMappersQueue, std::list<ClientProxy> &mappers);
+	MapReceiver(DataCollector &dataCollector, const std::string puerto,
+			const int maxMappersQueue, std::list<ClientProxy> &mappers);
 
 	//Empiezo a escuchar mappers, meterlos en el vector y los arranco
 	void run();
