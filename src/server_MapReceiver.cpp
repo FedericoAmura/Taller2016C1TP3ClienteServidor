@@ -12,7 +12,7 @@
 #include "server_DataCollector.h"
 
 MapReceiver::MapReceiver(DataCollector &dataCollector, const std::string puerto,
-		const int maxMappersQueue, std::list<ClientProxy> &mappers)
+		const int maxMappersQueue, std::list<ClientProxy*> &mappers)
 	: aceptarConexiones(false), dataCollector(dataCollector), mappers(mappers) {
 	if (0 != socket_init_server(&mapperListener, puerto.c_str())) {
 		throw std::exception();
@@ -30,9 +30,9 @@ void MapReceiver::run() {
 		if (0 != socket_accept(&mapperListener,&newMapSocket)) {
 			throw std::exception();
 		}
-		ClientProxy mapper(dataCollector, newMapSocket);
+		ClientProxy* mapper = new ClientProxy(dataCollector, newMapSocket);
 		mappers.push_back(mapper);
-		mappers.back().start();
+		mappers.back()->start();
 	}
 }
 

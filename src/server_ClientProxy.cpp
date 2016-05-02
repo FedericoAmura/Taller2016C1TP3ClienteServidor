@@ -14,7 +14,13 @@ ClientProxy::ClientProxy(DataCollector &dataCollector, socket_t cliente)
 }
 
 std::string ClientProxy::recibirLinea() {
-	return std::string("prueba");
+	std::string linea;
+	char letter = '\n';
+	while (0 == socket_receive(&socket,&letter,1)) {
+		if (letter == '\n') break;
+		linea += letter;
+	}
+	return linea;
 }
 
 void ClientProxy::agregarData(std::string dia, std::string temperatura,
@@ -28,9 +34,11 @@ void ClientProxy::run() {
 	while (seguirLeyendo) {
 		linea = recibirLinea();
 		if (linea.compare("End") != 0) {
-			std::string dia;
-			std::string temperatura;
-			std::string ciudad;
+			size_t primerSeparador = linea.find(SEPARADOR_CAMPOS);
+			size_t segundoSeparador = linea.find(SEPARADOR_CAMPOS, primerSeparador+1);
+			std::string dia = linea.substr(0,primerSeparador);
+			std::string temperatura = linea.substr(primerSeparador+1, segundoSeparador-primerSeparador-1);
+			std::string ciudad = linea.substr(segundoSeparador+1);
 			//parseo linea a esos 3 strings TODO
 			agregarData(dia, temperatura, ciudad);
 		} else {

@@ -27,10 +27,10 @@ void MappersHandler::run() {
 	mapReceiver.start();
 	while (aceptarConexiones) {
 		//Recorro los mappers y elimino el que haya terminado
-		for (std::list<ClientProxy>::iterator iter_mappers = mappers.begin();
+		for (std::list<ClientProxy*>::iterator iter_mappers = mappers.begin();
 				iter_mappers != mappers.end(); ++iter_mappers) {
-			if ((*iter_mappers).terminado())
-				(*iter_mappers).join();
+			if ((*iter_mappers)->terminado())
+				(*iter_mappers)->join();
 				iter_mappers = mappers.erase(iter_mappers);
 		}
 		//Espero un tiempo y vuelvo a ver
@@ -43,9 +43,9 @@ void MappersHandler::finish() {
 	aceptarConexiones = false;
 
 	//Hago un join a todos los mappers para dejar que terminen
-	for (std::list<ClientProxy>::iterator iter_mappers = mappers.begin();
+	for (std::list<ClientProxy*>::iterator iter_mappers = mappers.begin();
 			iter_mappers != mappers.end(); ++iter_mappers) {
-		(*iter_mappers).join();
+		(*iter_mappers)->join();
 	}
 	//Elimino todos los mappers, ya terminaron
 	while (!mappers.empty()) {

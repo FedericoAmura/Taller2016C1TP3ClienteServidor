@@ -17,6 +17,8 @@ extern "C"{
 #include "server_Thread.h"
 #include "server_DataCollector.h"
 
+#define SEPARADOR_CAMPOS ' '
+
 class ClientProxy : public Thread {
 private:
 	bool datosPendientes;

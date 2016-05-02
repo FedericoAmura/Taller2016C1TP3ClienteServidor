@@ -30,11 +30,11 @@ private:
 	bool aceptarConexiones;
 	DataCollector dataCollector;
 	socket_t mapperListener;
-	std::list<ClientProxy> mappers;
+	std::list<ClientProxy*> &mappers;
 
 public:
 	MapReceiver(DataCollector &dataCollector, const std::string puerto,
-			const int maxMappersQueue, std::list<ClientProxy> &mappers);
+			const int maxMappersQueue, std::list<ClientProxy*> &mappers);
 
 	//Empiezo a escuchar mappers, meterlos en el vector y los arranco
 	void run();
