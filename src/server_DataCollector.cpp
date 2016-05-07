@@ -5,21 +5,29 @@
  *      Author: freddy
  */
 
-#include <map>
 #include <string>
+#include <utility>
+#include <map>
+#include <cstdlib>
 
 #include "server_DataCollector.h"
+#include "server_Mutex.h"
+#include "server_Lock.h"
 
 DataCollector::DataCollector() {
 }
 
-void DataCollector::addTemperatura(std::string dia, std::string temperatura,
-		std::string lugar) {
-	temperaturas[dia][temperatura] = lugar;
+void DataCollector::addTemperatura(const std::string &dia,
+		const std::string &temperatura,
+		const std::string &lugar) {
+	std::pair<int,std::string> par(atoi(temperatura.c_str()),lugar);
+	Lock l(m);
+	(temperaturas[dia]).insert(par);
 }
 
-std::map<std::string, std::string> DataCollector::getTemperaturasDia(
-		std::string dia) {
+std::multimap<int, std::string> DataCollector::getTemperaturasDia(
+		const std::string &dia) {
+	Lock l(m);
 	return temperaturas[dia];
 }
 

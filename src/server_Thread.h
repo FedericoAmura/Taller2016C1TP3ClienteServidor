@@ -23,10 +23,13 @@ private:
 public:
 	Thread();
 
+	//Arranca el thread
 	void start();
 
+	//Joinea el llamador al thread
 	void join();
 
+	//Metodo de los hijos a correr en un nuevo thread
 	virtual void run() = 0;
 
 	virtual ~Thread();

@@ -13,14 +13,7 @@
 #include <vector>
 #include <list>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
 #include "common_Socket.h"
-#ifdef __cplusplus
-}
-#endif
-
 #include "server_Thread.h"
 #include "server_DataCollector.h"
 #include "server_ClientProxy.h"
@@ -28,8 +21,9 @@ extern "C" {
 class MapReceiver : public Thread {
 private:
 	bool aceptarConexiones;
-	DataCollector dataCollector;
-	socket_t mapperListener;
+	const std::string puerto;
+	DataCollector &dataCollector;
+	Socket mapperListener;
 	std::list<ClientProxy*> &mappers;
 
 public:

@@ -11,22 +11,23 @@
 #include <string>
 
 extern "C"{
-#include "common_Socket.h"
+#include "common_cSocket.h"
 }
 
 #include "server_Thread.h"
 #include "server_DataCollector.h"
+#include "common_Socket.h"
 
 #define SEPARADOR_CAMPOS ' '
 
 class ClientProxy : public Thread {
 private:
 	bool datosPendientes;
-	DataCollector dataCollector;
-	socket_t socket;
+	DataCollector &dataCollector;
+	Socket socket;
 
 public:
-	ClientProxy(DataCollector &dataCollector, const socket_t cliente);
+	ClientProxy(DataCollector &dataCollector, const Socket cliente);
 
 	//Arranco la recepcion de datos del mapper
 	void run();
@@ -38,7 +39,8 @@ public:
 
 private:
 	std::string recibirLinea();
-	void agregarData(std::string dia, std::string temperatura, std::string ciudad);
+	void agregarData(const std::string &dia, const std::string &temperatura,
+			const std::string &ciudad);
 };
 
 #endif /* SERVER_CLIENTPROXY_H_ */

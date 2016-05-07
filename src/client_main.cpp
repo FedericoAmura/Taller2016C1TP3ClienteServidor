@@ -17,7 +17,7 @@
 #define CODE_SEPARADOR_LINEAS "\n";
 #define CODE_SERVER_EOF "End\n"
 
-int main_client(int argc, char *argv[]) try {
+int main(int argc, char *argv[]) try {
 	//error si me llaman sin 2 argumentos
 	if (argc != 3) {
 		std::cout << "ERROR: argumentos\n";

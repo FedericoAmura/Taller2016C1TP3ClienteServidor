@@ -42,14 +42,14 @@ int main(int argc, char *argv[]) try {
 	mappersHandler.start();	//lanzo el receptor de mappers
 
 	//Espero hasta recibir una 'q' para seguir
-	std::cout << "Ingrese una 'q' para terminar los mappers." << std::endl;
 	while (quit != 'q') {
 		std::cin >> quit;
-		sleep(0.1);
 	}
 
 	//Finalizo la recepcion de mappers
 	mappersHandler.finish();
+	//Espero que terminen los que quedaron
+	mappersHandler.join();
 
 	//Inicializo, arranco y espero el controlador de reducers
 	ReducersHandler reducerHandler(CANT_DIAS_MES, dataCollector, resultados);
@@ -58,7 +58,7 @@ int main(int argc, char *argv[]) try {
 
 	//Imprimo resultados del proceso
 	for (int i = 0; i < CANT_DIAS_MES; i++) {
-		std::cout << i << ": " << resultados[i] << std::endl;
+		std::cout << i+1 << ": " << resultados[i] << std::endl;
 	}
 
 	return EXIT_CODE;

@@ -17,14 +17,20 @@
 class Reducer : public Thread {
 private:
 	std::string &resultado;
-	const std::map<std::string, std::string> &temperaturasDia;
+	const std::multimap<int, std::string> temperaturasDia;
 
 public:
-	Reducer(std::string &resultado, const std::map<std::string, std::string> &temperaturas);
+	Reducer(std::string &resultado,
+			const std::multimap<int, std::string> temperaturas);
 
 	void run();
 
 	virtual ~Reducer();
+
+private:
+	//Convierte un numero de cualquier tipo a string (en decimal)
+	template <typename T>
+	std::string numeroATexto(T numero);
 };
 
 #endif /* SERVER_REDUCER_H_ */

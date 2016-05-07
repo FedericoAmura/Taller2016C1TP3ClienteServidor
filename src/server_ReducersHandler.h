@@ -17,18 +17,27 @@
 
 class ReducersHandler : public Thread {
 private:
+	//Cantidad de dias del mes
 	int dias;
-	DataCollector data;
+	//Referencia a los datos juntados por los mappers
+	DataCollector &data;
+	//Referencia al vector donde se van a dejar los resultados
 	std::vector<std::string> &resultados;
+	//Vector donde guardo los reducers
 	std::vector<Reducer*> reducers;
 
 public:
-	ReducersHandler(int dias, const DataCollector &dataCollector,
+	ReducersHandler(int dias, DataCollector &dataCollector,
 			std::vector<std::string> &resultados);
 
 	void run();
 
 	virtual ~ReducersHandler();
+
+private:
+	//Convierte un numero de cualquier tipo a string (en decimal)
+	template <typename T>
+	std::string numeroATexto(T numero);
 };
 
 #endif /* SERVER_REDUCERSHANDLER_H_ */

@@ -12,14 +12,16 @@
 
 #include "common_Socket.h"
 
+//Clase de conexion TCP con el server
 class ServerProxy {
 private:
-	socket_t serverSocket;
+	Socket serverSocket;
 
 public:
-	ServerProxy(const std::string ip, const std::string puerto);
+	ServerProxy(const std::string &ip, const std::string &puerto);
 
-	int enviar(const std::string mensaje);
+	//Envia al server el mensaje
+	int enviar(const std::string &mensaje);
 
 	virtual ~ServerProxy();
 };

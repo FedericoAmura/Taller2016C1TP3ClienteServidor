@@ -5,26 +5,23 @@
  *      Author: freddy
  */
 
+#include <iostream>
 #include <string>
 
 #include "server_ClientProxy.h"
 
-ClientProxy::ClientProxy(DataCollector &dataCollector, socket_t cliente)
+ClientProxy::ClientProxy(DataCollector &dataCollector, const Socket cliente)
 	: datosPendientes(true), dataCollector(dataCollector), socket(cliente) {
 }
 
 std::string ClientProxy::recibirLinea() {
-	std::string linea;
-	char letter = '\n';
-	while (0 == socket_receive(&socket,&letter,1)) {
-		if (letter == '\n') break;
-		linea += letter;
-	}
+	std::string linea = socket.recibirHasta('\n');
 	return linea;
 }
 
-void ClientProxy::agregarData(std::string dia, std::string temperatura,
-		std::string ciudad) {
+void ClientProxy::agregarData(const std::string &dia,
+		const std::string &temperatura,
+		const std::string &ciudad) {
 	dataCollector.addTemperatura(dia, temperatura, ciudad);
 }
 
@@ -35,11 +32,13 @@ void ClientProxy::run() {
 		linea = recibirLinea();
 		if (linea.compare("End") != 0) {
 			size_t primerSeparador = linea.find(SEPARADOR_CAMPOS);
-			size_t segundoSeparador = linea.find(SEPARADOR_CAMPOS, primerSeparador+1);
+			size_t segundoSeparador = linea.find(SEPARADOR_CAMPOS,
+					primerSeparador+1);
 			std::string dia = linea.substr(0,primerSeparador);
-			std::string temperatura = linea.substr(primerSeparador+1, segundoSeparador-primerSeparador-1);
+			std::string temperatura = linea.substr(primerSeparador+1,
+					segundoSeparador-primerSeparador-1);
 			std::string ciudad = linea.substr(segundoSeparador+1);
-			//parseo linea a esos 3 strings TODO
+
 			agregarData(dia, temperatura, ciudad);
 		} else {
 			seguirLeyendo = false;
@@ -53,7 +52,6 @@ bool ClientProxy::terminado() {
 }
 
 ClientProxy::~ClientProxy() {
-	socket_shutdown(&socket);
-	socket_destroy(&socket);
+	socket.cerrar();
 }
 

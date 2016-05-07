@@ -11,18 +11,26 @@
 #include <string>
 #include <map>
 
+#include "server_Mutex.h"
+
 class DataCollector {
 private:
 	//Un map de trios, dia-temperatura-ciudad
-	std::map<std::string, std::map<std::string, std::string> > temperaturas;
+	std::map<std::string, std::multimap<int,std::string> > temperaturas;
+	//Mutex para proteger accesos simultaneos a los datos
+	Mutex m;
 
 public:
 	DataCollector();
 
-	void addTemperatura(std::string dia, std::string temperatura,
-			std::string lugar);
+	//Agrega una nueva temperatura para una ciudad un dia del mes
+	void addTemperatura(const std::string &dia,
+			const std::string &temperatura,
+			const std::string &lugar);
 
-	std::map<std::string, std::string> getTemperaturasDia(std::string dia);
+	//Devuelve un multimap con las temperaturas de un dia en todas las ciudades
+	std::multimap<int, std::string> getTemperaturasDia(
+			const std::string &dia);
 
 	virtual ~DataCollector();
 };

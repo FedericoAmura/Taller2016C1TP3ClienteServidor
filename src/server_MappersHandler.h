@@ -21,7 +21,7 @@
 class MappersHandler : public Thread {
 private:
 	bool aceptarConexiones;
-	DataCollector dataCollector;
+	DataCollector &dataCollector;
 	std::list<ClientProxy*> mappers;
 	MapReceiver mapReceiver;
 
